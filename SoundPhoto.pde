@@ -10,25 +10,29 @@ Minim minim;
 float radius = 0;
 
 
-AudioSample[] tracks;
-int[] xVals;
-int[] yVals;
-int[] strokeVals = {127,200,135,100,190,240,108,120,80,50,200,210,130,150,192,150,60,80,130,150,200};
+AudioSample[] tracks;           // array of minim mp3 track audio samples
+int[] xVals;                    // x coordinates of all soundpoints 
+int[] yVals;                    // y coordinates of all soundpoints
+int[] strokeVals;
 int index = 0;
+int ind   = 1;
+
 void setup()
 {
   size(561,561);
   smooth();
   ellipseMode(RADIUS);
-  minim = new Minim(this);
+  minim  = new Minim(this);
   tracks = new AudioSample[20];
-  xVals = new int[20];
-  yVals = new int[20];
+  xVals  = new int[20];
+  yVals  = new int[20];
+  strokeVals = new int[20];
   
   
   for(int i=1;i<20;i++)
   {  
     tracks[i] = minim.loadSample("track" + i + ".mp3",512);
+    strokeVals[i] = int(random(100,255)); // create random star brightness 
   }
   Ani.init(this);
   photo = loadImage("MoleraBeachBigSur.JPG");
@@ -102,7 +106,7 @@ void keyPressed()
      xVals[3] = mouseX; yVals[3] = mouseY;
      Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
    }
-  if(key == 'f')
+   if(key == 'f')
    {
      tracks[4].trigger();
      xVals[4] = mouseX; yVals[4] = mouseY;
@@ -120,7 +124,7 @@ void keyPressed()
      xVals[6] = mouseX; yVals[6] = mouseY;
      Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
    }
-  if(key == 'j')
+   if(key == 'j')
    {
      tracks[7].trigger();
      xVals[7] = mouseX; yVals[7] = mouseY;
@@ -150,10 +154,22 @@ void keyPressed()
      xVals[11] = mouseX; yVals[11] = mouseY;
      Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
    }
-    if(key == 'c')
+   if(key == 'c')
    {
      tracks[12].trigger();
      xVals[12] = mouseX; yVals[12] = mouseY;
+     Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
+   }
+   if(key == 'v')
+   {
+     tracks[13].trigger();
+     xVals[13] = mouseX; yVals[13] = mouseY;
+     Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
+   }
+   if(key == 'b')
+   {
+     tracks[14].trigger();
+     xVals[14] = mouseX; yVals[14] = mouseY;
      Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
    }
    
@@ -163,7 +179,19 @@ void mousePressed()
 {
   
   
-  //point(mouseX,mouseY);
+  if(ind < 20) 
+  {
+     tracks[ind].trigger();
+     xVals[ind] = mouseX; yVals[ind] = mouseY;
+     Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
+     ind++;
+  }
+  else
+  {
+     ind = 1;
+  }
+  
+  
 }
 
 
