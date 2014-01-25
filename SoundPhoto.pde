@@ -8,14 +8,18 @@ PImage photo;
 Minim minim;
 
 float radius = 0;
-
-
+float x = 0;
+float y = 0;
+boolean playBack = false;
 AudioSample[] tracks;           // array of minim mp3 track audio samples
 int[] xVals;                    // x coordinates of all soundpoints 
 int[] yVals;                    // y coordinates of all soundpoints
 int[] strokeVals;
+PVector[] constellationEdge;
 int index = 0;
 int ind   = 1;
+
+Ani aniEdge;
 
 void setup()
 {
@@ -27,12 +31,15 @@ void setup()
   xVals  = new int[20];
   yVals  = new int[20];
   strokeVals = new int[20];
-  
+  constellationEdge = new PVector[20];
+  //constellationEdge = new ArrayList();
   
   for(int i=1;i<20;i++)
   {  
     tracks[i] = minim.loadSample("track" + i + ".mp3",512);
     strokeVals[i] = int(random(100,255)); // create random star brightness 
+    
+    
   }
   Ani.init(this);
   photo = loadImage("MoleraBeachBigSur.JPG");
@@ -84,6 +91,16 @@ void draw()
       // really want to add to point verticies.
      //noLoop();
    }
+   
+   if(playBack)
+   {
+      
+     
+       line(xVals[1],yVals[1],x,y);
+     
+   }
+   
+   
 }
 
 void keyPressed()
@@ -173,6 +190,18 @@ void keyPressed()
      Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
    }
    
+   if(key == 'p')
+   {
+     
+     playBack = true;
+     println("Entering Playback Mode");
+     x = xVals[1]; y = yVals[1];
+     tracks[1].trigger();
+     Ani.to(this, tracks[1].length()/1000, "x", xVals[2],Ani.LINEAR);
+     Ani.to(this, tracks[1].length()/1000, "y", yVals[2],Ani.LINEAR);
+     
+   }
+   
 }
 
 void mousePressed()
@@ -184,11 +213,21 @@ void mousePressed()
      tracks[ind].trigger();
      xVals[ind] = mouseX; yVals[ind] = mouseY;
      Ani.to(this, .5, "radius", 20, Ani.QUAD_OUT);
+     
+     if(ind > 1)
+     {
+        
+        constellationEdge[ind] = new PVector(xVals[ind]-xVals[ind-1], yVals[ind]-yVals[ind-1]);
+        println(constellationEdge[ind].x + " " + constellationEdge[ind].y);
+     }  
+     
+     
      ind++;
   }
   else
   {
      ind = 1;
+     
   }
   
   
