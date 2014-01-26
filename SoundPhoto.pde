@@ -18,8 +18,7 @@ int[] strokeVals;
 PVector[] constellationEdge;
 int index = 0;
 int ind   = 1;
-
-Ani aniEdge;
+int count = 1;
 
 void setup()
 {
@@ -95,8 +94,9 @@ void draw()
    if(playBack)
    {
       
-     
-       line(xVals[1],yVals[1],x,y);
+       stroke(180);
+      
+       line(xVals[count-1],yVals[count-1],x,y);
      
    }
    
@@ -195,11 +195,14 @@ void keyPressed()
      
      playBack = true;
      println("Entering Playback Mode");
-     x = xVals[1]; y = yVals[1];
-     tracks[1].trigger();
-     Ani.to(this, tracks[1].length()/1000, "x", xVals[2],Ani.LINEAR);
-     Ani.to(this, tracks[1].length()/1000, "y", yVals[2],Ani.LINEAR);
-     
+     if(count < 19)
+     {
+       x = xVals[count]; y = yVals[count];
+       tracks[count].trigger();
+       Ani.to(this, tracks[count].length()/1000, "x", xVals[count+1],Ani.LINEAR);
+       Ani.to(this, tracks[count].length()/1000, "y", yVals[count+1],Ani.LINEAR);
+       count++;
+     }
    }
    
 }
@@ -232,8 +235,3 @@ void mousePressed()
   
   
 }
-
-
-  
-  
-
