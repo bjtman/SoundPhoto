@@ -94,12 +94,24 @@ void draw()
    if(playBack)
    {
       
-       stroke(180);
+       strokeWeight(0.2);
+       stroke(200);
+       for(int r=2;r<count;r++)
+       {
        
-      
-        line(xVals[count-1],yVals[count-1],x,y);
-        
-     
+         stroke(250);
+         noFill();
+         
+         endShape();
+         line(xVals[r-1],yVals[r-1],xVals[r],yVals[r]);
+         stroke(255);
+         ellipseMode(RADIUS);
+         ellipse(xVals[r],yVals[r],4,4);
+         stroke(200);
+       }
+       
+       line(xVals[count-1],yVals[count-1],x,y);
+       ellipse(x,y,4,4);
    }
    
    
