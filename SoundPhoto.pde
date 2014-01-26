@@ -95,8 +95,10 @@ void draw()
    {
       
        stroke(180);
+       
       
-       line(xVals[count-1],yVals[count-1],x,y);
+        line(xVals[count-1],yVals[count-1],x,y);
+        
      
    }
    
